@@ -72,7 +72,7 @@ def create_data(data,features_result, category_by):
     y = np.array(y_data['label'])
     return X, y
 
-def Train_Test(X,y):
+def Train_Test_RF(features_result,X,y):
     # Split the data into 20% test and 80% training
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
     # Create a random forest classifier
@@ -85,6 +85,16 @@ def Train_Test(X,y):
     # Apply The Full Featured Classifier To The Test Data
     y_pred = clf.predict(X_test)    
     # View The Accuracy Of Our Full Feature Model
+    cmatrix = confusion_matrix(y_test,y_pred) 
+    classification = classification_report(y_test,y_pred)
+    accuracy = accuracy_score(y_test, y_pred)
+    return cmatrix, classification, accuracy
+
+def Train_Test_NB(features_result,X,y):
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    gnb = GaussianNB()
+    gnb.fit(X_train, y_train)        
+    y_pred = gnb.predict(X_test)    
     cmatrix = confusion_matrix(y_test,y_pred) 
     classification = classification_report(y_test,y_pred)
     accuracy = accuracy_score(y_test, y_pred)
